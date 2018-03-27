@@ -1,0 +1,40 @@
+<div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script type="text/babel">
+  const rootElement = document.getElementById('root')
+
+  // parametrizing the message to re-use the component
+  const Message = (props) => <div>{props.children}</div>
+
+  // however this doesn't seem "natural" transpile JSX syntax so let's change it
+
+  // const element = (
+  //   <div className="container">
+  //     {message({msg: 'Hello World'})}
+  //     {message({msg: 'Goodbye World'})}
+  //   </div>
+  // )
+
+  // but babel can't differentiate between original DOM elements or ones you create
+  // so instead of message we capitalize to "signal" we're using a custom element
+  const element = (
+    <div className="container">
+      <Message>
+        Hello World
+        <Message>Goodbye World</Message>
+      </Message>
+    </div>
+  )
+
+  /*
+    So to create a component to be re-used throughout the app
+    we create a function that has a Capital letter at the start
+    that receives a props variable which we can use on the element after
+  */
+
+  const CustomElement = (props) => <div>{props.children}</div>
+
+  ReactDOM.render(element, rootElement)
+</script>
